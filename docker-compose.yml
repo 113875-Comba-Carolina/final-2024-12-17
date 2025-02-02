@@ -6,18 +6,40 @@ services:
   # TODO
   # Completar microservicio
   # puerto 8080
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+    - "8080:8080"
+    networks:
+    - library-network
 
   # Clientes Service
   clientes-service:
   # TODO
   # Completar microservicio
   # puerto 8081
+    image: cliente-service
+    ports:
+      - "8081:8081"
+    networks:
+      - library-network
 
   # Biblioteca Service
   biblioteca-service:
   # TODO
   # Completar microservicio
   # puerto 8082
+    image: biblioteca-service
+    ports:
+      - "8082:8082"
+    networks:
+      - library-network
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/biblioteca_db2
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 113875
 
 
   # Servicio de base de datos MySQL
